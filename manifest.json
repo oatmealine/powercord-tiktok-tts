@@ -1,0 +1,10 @@
+{
+  "name": "Say as TikTok TTS",
+  "description": "Lets you speak a message with the TikTok TTS API",
+  "author": "Jill \"oatmealine\" Monoids",
+  "version": "1.0.0",
+  "license": "GPL-3.0",
+  "permissions": [
+      "ext_api"
+  ]
+}
