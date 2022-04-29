@@ -3,18 +3,24 @@
 
 const { Plugin } = require("powercord/entities");
 const { getModule, React } = require("powercord/webpack");
-const { post } = require('powercord/http');
 const { inject, uninject } = require("powercord/injector");
+const Settings = require('./Settings');
+const { runTTS } = require('./api.js');
+const { injectContextMenu } = require('powercord/util');
 
-const url = 'https://api16-normal-useast5.us.tiktokv.com/media/api/text/speech/invoke/?text_speaker=en_us_001&req_text=';
-
-module.exports = class ViewRaw extends Plugin {
+module.exports = class TikTokTTS extends Plugin {
 	startPlugin() {
 		this.addButtons();
+		powercord.api.settings.registerSettings(this.entityID, {
+			category: this.entityID,
+			label: 'Say as TikTok TTS',
+			render: Settings,
+		});
 	}
 
 	pluginWillUnload() {
 		this.addButtons(true, true);
+		powercord.api.settings.unregisterSettings(this.entityID);
 	}
 
 	async addButtons(repatch, unpatch) {
@@ -37,22 +43,9 @@ module.exports = class ViewRaw extends Plugin {
 						null,
 						React.createElement(MenuItem, {
 							action: async () => {
-                const postUrl = url + encodeURIComponent(args[0].message.content);
-                let res = await post(postUrl);
-                if (res.statusCode != 200 || res.body === '' || res.body.message != 'success') {
-                  powercord.api.notices.sendToast('tiktok-tts', {
-                    header: 'Error',
-                    content: 'TikTok TTS returned an error: ' + (res.body ? res.body.message : res.statusCode),
-                    type: 'danger',
-                    icon: 'error'
-                  });
-                } else {
-                  let audio = new Audio('data:audio/mp3;base64,' + res.body.data.v_str);
-                  audio.volume = 0.5;
-                  audio.play();
-                }
-              },
-              disabled: !args[0].message.content,
+								runTTS(args[0].message.content, this.settings.get('voice', 'en_us_002'), this.settings.get('volume', 0.5));
+							},
+							disabled: !args[0].message.content,
 							id: 'tiktok-tts',
 							label: 'Speak as TikTok TTS',
 						})
@@ -90,3 +83,5 @@ module.exports = class ViewRaw extends Plugin {
 		}
 	}
 };
+
+exports = runTTS;
