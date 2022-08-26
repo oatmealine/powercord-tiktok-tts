@@ -1,10 +1,9 @@
-
 const { React } = require('powercord/webpack');
 const { SelectInput, SliderInput } = require('powercord/components/settings');
 const { runTTS } = require('./api.js');
 
 const voices = [
-	['en_us_001',                  'English US - Female'],
+	['en_us_002',                  'English US - Female'],
 	['en_us_006',                  'English US - Male 1'],
 	['en_us_007',                  'English US - Male 2'],
 	['en_us_009',                  'English US - Male 3'],
