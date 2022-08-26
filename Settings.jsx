@@ -2,8 +2,10 @@ const { React } = require('powercord/webpack');
 const { SelectInput, SliderInput } = require('powercord/components/settings');
 const { runTTS } = require('./api.js');
 
+// https://github.com/oscie57/tiktok-voice/blob/main/codes.md
 const voices = [
-	['en_us_002',                  'English US - Female'],
+	['en_us_001',                  'English US - Female 1 (Int. 1)'],
+	['en_us_002',                  'English US - Female 1 (Int. 2)'],
 	['en_us_006',                  'English US - Male 1'],
 	['en_us_007',                  'English US - Male 2'],
 	['en_us_009',                  'English US - Male 3'],
@@ -36,10 +38,10 @@ const voices = [
 	['en_us_stitch',               'Stitch (Lilo & Stitch)'],
 	['en_us_stormtrooper',         'Stormtrooper (Star Wars)'],
 	['en_us_rocket',               'Rocket (Guardians of the Galaxy)'],
-	['en_female_f08_salut_damour', 'Alto'],
-	['en_male_m03_lobby',          'Tenor'],
-	['en_male_m03_sunshine_soon',  'Sunshine Soon'],
-	['en_female_f08_warmy_breeze', 'Warmy Breeze'],
+	['en_female_f08_salut_damour', 'Alto - singing voice'],
+	['en_male_m03_lobby',          'Tenor - singing voice'],
+	['en_male_m03_sunshine_soon',  'Sunshine Soon - singing voice'],
+	['en_female_f08_warmy_breeze', 'Warmy Breeze - singing voice'],
 ].map(v => ({value: v[0], label: v[1]}));
 
 module.exports = class TikTokTTSSettings extends React.PureComponent {
